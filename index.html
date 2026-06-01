@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Battle Through the Heavens</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a227;--gold-light:#f0d060;--gold-dim:#7a5e10;
+  --blue:#1a6cf5;--cyan:#00e5ff;--purple:#8b2be2;
+  --bg-deep:#030508;--bg-dark:#07090f;--bg-mid:#0d1120;
+  --text:#f0e6c8;--muted:#a08860;--jade:#1db888;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg-deep);color:var(--text);font-family:'Cinzel',serif;overflow-x:hidden;min-height:100vh;}
+body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='4' fill='%2300e5ff' opacity='.9'/%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='%231a6cf5' stroke-width='1'/%3E%3C/svg%3E") 12 12,auto;}
+
+/* PARTICLES */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.spark{position:absolute;border-radius:50%;animation:floatUp linear infinite;opacity:0;}
+@keyframes floatUp{0%{transform:translateY(0) scale(1);opacity:0;}10%{opacity:1;}90%{opacity:.6;}100%{transform:translateY(-100vh) scale(.3);opacity:0;}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:68px;background:rgba(3,5,8,.97);border-bottom:1px solid rgba(201,162,39,.18);backdrop-filter:blur(12px);transition:background .3s;}
+.nav-logo{font-family:'Cinzel Decorative',serif;font-size:clamp(13px,2vw,17px);color:var(--gold);text-decoration:none;letter-spacing:3px;text-shadow:0 0 20px rgba(201,162,39,.4);}
+.nav-links{display:flex;gap:clamp(14px,2.5vw,32px);list-style:none;}
+.nav-links button{background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:clamp(9px,1vw,12px);letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:color .3s,text-shadow .3s;padding:4px 0;}
+.nav-links button:hover,.nav-links button.active{color:var(--gold-light);text-shadow:0 0 12px rgba(240,208,96,.7);}
+.nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:7px 18px;font-family:'Cinzel',serif;font-size:clamp(9px,1vw,11px);letter-spacing:2px;cursor:pointer;transition:all .3s;white-space:nowrap;}
+.nav-cta:hover{background:var(--gold);color:var(--bg-deep);box-shadow:0 0 20px rgba(201,162,39,.4);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{width:24px;height:1.5px;background:var(--gold);display:block;transition:.3s;}
+
+/* MOBILE MENU */
+.mobile-menu{display:none;position:fixed;inset:0;z-index:300;background:rgba(3,5,8,.99);flex-direction:column;align-items:center;justify-content:center;gap:28px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu button{background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:clamp(16px,4vw,22px);letter-spacing:4px;cursor:pointer;text-transform:uppercase;transition:color .3s;}
+.mobile-menu button:hover{color:var(--gold);}
+.mobile-close{position:absolute;top:24px;right:5vw;font-size:26px;color:var(--gold);cursor:pointer;background:none;border:none;font-family:sans-serif;}
+
+/* PAGES */
+.page{display:none;min-height:100vh;padding-top:68px;animation:fadeIn .5s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* ========== HOME PAGE ========== */
+#page-home{}
+.hero{position:relative;min-height:calc(100vh - 0px);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 80%,rgba(26,108,245,.15) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 50% 100%,rgba(0,229,255,.07) 0%,transparent 50%),var(--bg-deep);}
+.ering{position:absolute;border-radius:50%;border:1px solid rgba(0,229,255,.1);animation:ering 4s ease-in-out infinite;}
+.ering:nth-child(1){width:300px;height:300px;bottom:-50px;left:50%;transform:translateX(-50%) rotateX(75deg);}
+.ering:nth-child(2){width:520px;height:520px;bottom:-100px;left:50%;transform:translateX(-50%) rotateX(75deg);animation-delay:.8s;border-color:rgba(26,108,245,.08);}
+.ering:nth-child(3){width:740px;height:740px;bottom:-150px;left:50%;transform:translateX(-50%) rotateX(75deg);animation-delay:1.6s;border-color:rgba(201,162,39,.05);}
+@keyframes ering{0%,100%{opacity:.3;}50%{opacity:1;}}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:920px;}
+.hero-badge{display:inline-block;border:1px solid rgba(201,162,39,.4);color:var(--gold);font-size:clamp(9px,1.1vw,11px);letter-spacing:4px;padding:6px 20px;margin-bottom:32px;text-transform:uppercase;animation:fadeInDown 1s ease forwards;}
+.hero-title{font-family:'Cinzel Decorative',serif;font-size:clamp(34px,8vw,94px);font-weight:900;line-height:1.05;letter-spacing:4px;margin-bottom:16px;}
+.hero-title .t1{display:block;background:linear-gradient(180deg,#fff 0%,var(--gold-light) 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(201,162,39,.3));}
+.hero-title .t2{display:block;font-size:clamp(20px,4.5vw,50px);color:var(--cyan);-webkit-text-fill-color:initial;text-shadow:0 0 30px rgba(0,229,255,.5),0 0 60px rgba(26,108,245,.3);letter-spacing:8px;margin-top:8px;}
+.hero-sub{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.8vw,19px);color:var(--muted);letter-spacing:2px;margin:24px 0 48px;animation:fadeInUp 1s .6s ease both;}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp 1s .9s ease both;}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2;animation:fadeInUp 1s 1.5s ease both;}
+.scroll-hint span{font-size:9px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;}
+.scroll-line{width:1px;height:50px;background:linear-gradient(180deg,var(--gold),transparent);animation:spulse 2s ease-in-out infinite;}
+@keyframes spulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* HOME SECTIONS */
+.home-section{padding:clamp(60px,9vw,110px) 5vw;}
+.sec-label{font-size:10px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;text-align:center;display:block;margin-bottom:14px;}
+.sec-title{font-family:'Cinzel Decorative',serif;font-size:clamp(22px,3.8vw,40px);text-align:center;background:linear-gradient(180deg,#fff 0%,var(--gold-light) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;}
+.sec-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);text-align:center;max-width:580px;margin:0 auto 56px;line-height:1.8;}
+
+/* STORY GRID */
+.story-wrap{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:center;}
+.story-text h3{font-size:clamp(16px,2.2vw,24px);color:var(--gold-light);margin-bottom:18px;letter-spacing:2px;}
+.story-text p{font-family:'IM Fell English',serif;font-size:clamp(13px,1.4vw,15px);color:var(--muted);line-height:1.9;margin-bottom:14px;}
+.story-flame{height:clamp(260px,38vw,440px);display:flex;align-items:center;justify-content:center;}
+
+/* RANKS PREVIEW GRID */
+.ranks-home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:14px;max-width:1200px;margin:0 auto;}
+.rank-card{position:relative;border:1px solid rgba(201,162,39,.14);background:linear-gradient(160deg,rgba(13,17,32,.95),rgba(7,9,15,.98));padding:24px 18px;text-align:center;transition:all .4s;overflow:hidden;cursor:pointer;}
+.rank-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--rc,var(--gold));box-shadow:0 0 10px var(--rc,var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.rank-card:hover::before{transform:scaleX(1);}
+.rank-card:hover{border-color:var(--rc,var(--gold));transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,.4);}
+.rank-num{font-size:10px;letter-spacing:4px;color:var(--rc,var(--gold));text-transform:uppercase;margin-bottom:10px;opacity:.7;}
+.rank-name{font-family:'Cinzel Decorative',serif;font-size:clamp(12px,1.6vw,16px);color:var(--text);margin-bottom:8px;}
+.rank-short{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(10px,1.1vw,12px);color:var(--muted);line-height:1.6;}
+.rank-stars{margin-top:12px;display:flex;justify-content:center;gap:4px;}
+.star{width:6px;height:6px;background:var(--rc,var(--gold));transform:rotate(45deg);}
+.star.off{opacity:.12;}
+
+/* CHAR PREVIEW */
+.chars-home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:clamp(16px,2.5vw,28px);max-width:1100px;margin:0 auto;}
+.char-card{border:1px solid rgba(201,162,39,.1);background:linear-gradient(160deg,rgba(10,14,24,.97),rgba(5,7,12,.99));overflow:hidden;transition:all .4s;cursor:pointer;}
+.char-card:hover{transform:translateY(-6px);border-color:var(--cc,var(--gold));box-shadow:0 20px 50px rgba(0,0,0,.5);}
+.char-vis{height:clamp(140px,18vw,190px);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.char-info{padding:clamp(14px,1.8vw,22px);}
+.char-name{font-family:'Cinzel Decorative',serif;font-size:clamp(14px,1.8vw,18px);color:var(--cc,var(--gold-light));margin-bottom:3px;}
+.char-title-tag{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+.char-desc-short{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(11px,1.2vw,13px);color:var(--muted);line-height:1.65;}
+.power-row{margin-top:12px;display:flex;align-items:center;gap:8px;}
+.pw-lbl{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;flex-shrink:0;}
+.pw-bg{flex:1;height:2px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.pw-fill{height:100%;background:linear-gradient(90deg,var(--cc,var(--gold-dim)),var(--cc,var(--gold)));border-radius:2px;transition:width 1.5s ease;}
+
+/* ABILITIES PREVIEW */
+.ab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px;max-width:1060px;margin:0 auto;}
+.ab-card{display:flex;gap:18px;border:1px solid rgba(201,162,39,.09);padding:clamp(14px,1.8vw,22px);background:rgba(10,14,24,.7);transition:all .3s;cursor:pointer;}
+.ab-card:hover{border-color:rgba(201,162,39,.22);background:rgba(13,17,32,.9);}
+.ab-icon{width:46px;height:46px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid var(--ac,var(--gold-dim));font-size:20px;}
+.ab-name{font-size:clamp(12px,1.4vw,14px);color:var(--text);margin-bottom:5px;letter-spacing:1px;}
+.ab-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(10px,1.1vw,12px);color:var(--muted);line-height:1.6;}
+
+/* WORLD GRID */
+.world-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:1px;max-width:1060px;margin:0 auto;border:1px solid rgba(201,162,39,.1);}
+.wc{padding:clamp(22px,2.8vw,38px) clamp(14px,2.2vw,26px);background:rgba(7,9,15,.97);border-right:1px solid rgba(201,162,39,.07);border-bottom:1px solid rgba(201,162,39,.07);position:relative;transition:background .3s;cursor:pointer;}
+.wc:hover{background:rgba(13,17,32,.99);}
+.wc-num{font-family:'Cinzel Decorative',serif;font-size:clamp(28px,4vw,48px);color:rgba(201,162,39,.05);position:absolute;top:12px;right:16px;line-height:1;}
+.wc-icon{font-size:18px;margin-bottom:12px;}
+.wc-name{font-size:clamp(12px,1.5vw,15px);color:var(--gold-light);margin-bottom:7px;letter-spacing:1px;}
+.wc-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(10px,1.1vw,12px);color:var(--muted);line-height:1.6;}
+
+/* QUOTE */
+.quote-sec{padding:clamp(60px,9vw,100px) 5vw;text-align:center;position:relative;overflow:hidden;}
+.quote-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(26,108,245,.07) 0%,transparent 70%);}
+.qmark{font-family:'Cinzel Decorative',serif;font-size:clamp(60px,10vw,120px);color:var(--gold);opacity:.07;line-height:.5;display:block;margin-bottom:28px;position:relative;z-index:1;}
+blockquote{font-family:'Cinzel Decorative',serif;font-size:clamp(16px,3vw,34px);color:var(--text);max-width:860px;margin:0 auto 20px;line-height:1.5;letter-spacing:2px;position:relative;z-index:1;text-shadow:0 0 40px rgba(201,162,39,.2);}
+.q-author{font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;position:relative;z-index:1;}
+
+/* CTA SECTION */
+.cta-sec{padding:clamp(80px,11vw,130px) 5vw;text-align:center;position:relative;overflow:hidden;background:var(--bg-deep);}
+.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(201,162,39,.05) 0%,transparent 70%);}
+.cta-title{font-family:'Cinzel Decorative',serif;font-size:clamp(26px,4.5vw,52px);background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:18px;position:relative;z-index:1;}
+.cta-sub{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.6vw,17px);color:var(--muted);margin-bottom:44px;position:relative;z-index:1;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+
+/* ======== RANKS PAGE ======== */
+#page-ranks{background:radial-gradient(ellipse 120% 60% at 50% 40%,rgba(26,108,245,.04) 0%,transparent 70%),var(--bg-mid);}
+.page-header{padding:clamp(40px,6vw,80px) 5vw clamp(20px,3vw,40px);text-align:center;}
+.ph-back{display:inline-flex;align-items:center;gap:8px;background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-bottom:32px;transition:color .3s;padding:0;}
+.ph-back:hover{color:var(--gold);}
+.ph-back::before{content:'←';font-size:14px;}
+.ranks-full-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:16px;max-width:1200px;margin:0 auto;padding:0 5vw clamp(60px,8vw,100px);}
+.rank-full-card{border:1px solid rgba(201,162,39,.14);background:linear-gradient(160deg,rgba(13,17,32,.95),rgba(7,9,15,.98));padding:clamp(20px,2.5vw,32px) clamp(16px,2vw,24px);position:relative;overflow:hidden;transition:all .4s;}
+.rank-full-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--rc,var(--gold));box-shadow:0 0 12px var(--rc,var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.rank-full-card:hover::before{transform:scaleX(1);}
+.rank-full-card:hover{transform:translateY(-4px);border-color:var(--rc,var(--gold));box-shadow:0 10px 40px rgba(0,0,0,.4);}
+.rf-num{font-size:10px;letter-spacing:4px;color:var(--rc,var(--gold));text-transform:uppercase;margin-bottom:10px;opacity:.7;}
+.rf-name{font-family:'Cinzel Decorative',serif;font-size:clamp(13px,1.7vw,17px);color:var(--text);margin-bottom:12px;}
+.rf-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(11px,1.2vw,13px);color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.rf-detail{font-family:'IM Fell English',serif;font-size:clamp(10px,1.1vw,12px);color:rgba(160,136,96,.7);line-height:1.6;border-top:1px solid rgba(201,162,39,.08);padding-top:12px;margin-top:4px;}
+.rf-stars{display:flex;gap:4px;margin-top:14px;}
+
+/* ======== CHARACTERS PAGE ======== */
+#page-characters{background:linear-gradient(180deg,var(--bg-deep) 0%,rgba(5,7,12,1) 100%);}
+.chars-detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(18px,2.5vw,28px);max-width:1200px;margin:0 auto;padding:0 5vw clamp(60px,8vw,100px);}
+.char-detail-card{border:1px solid rgba(201,162,39,.12);background:linear-gradient(160deg,rgba(10,14,24,.97),rgba(5,7,12,.99));overflow:hidden;transition:all .4s;}
+.char-detail-card:hover{transform:translateY(-5px);border-color:var(--cc,var(--gold));box-shadow:0 18px 50px rgba(0,0,0,.5);}
+.cd-visual{height:clamp(140px,18vw,190px);position:relative;display:flex;align-items:center;justify-content:center;}
+.cd-body{padding:clamp(16px,2vw,24px);}
+.cd-name{font-family:'Cinzel Decorative',serif;font-size:clamp(15px,2vw,20px);color:var(--cc,var(--gold-light));margin-bottom:3px;}
+.cd-title{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+.cd-bio{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(12px,1.3vw,14px);color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.cd-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.cd-stat{background:rgba(255,255,255,.03);border:1px solid rgba(201,162,39,.08);padding:8px 10px;}
+.cs-lbl{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px;}
+.cs-val{font-size:clamp(11px,1.2vw,13px);color:var(--text);}
+.cd-power{display:flex;align-items:center;gap:8px;}
+.cd-abilities{margin-top:14px;border-top:1px solid rgba(201,162,39,.08);padding-top:12px;}
+.cd-ab-title{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.cd-ab-list{display:flex;flex-wrap:wrap;gap:6px;}
+.ab-tag{border:1px solid rgba(201,162,39,.2);color:var(--muted);font-size:10px;letter-spacing:1px;padding:3px 8px;}
+
+/* ======== ABILITIES PAGE ======== */
+#page-abilities{background:radial-gradient(ellipse 100% 50% at 50% 50%,rgba(139,43,226,.04) 0%,transparent 70%),var(--bg-mid);}
+.ab-full-grid{display:grid;grid-template-columns:1fr;gap:0;max-width:900px;margin:0 auto;padding:0 5vw clamp(60px,8vw,100px);}
+.ab-full-card{display:grid;grid-template-columns:80px 1fr;gap:24px;border-bottom:1px solid rgba(201,162,39,.08);padding:clamp(24px,3vw,36px) 0;transition:background .3s;position:relative;}
+.ab-full-card:last-child{border-bottom:none;}
+.ab-full-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac,var(--gold-dim)),transparent);opacity:0;transition:opacity .3s;}
+.ab-full-card:hover::after{opacity:1;}
+.af-icon{width:80px;height:80px;display:flex;align-items:center;justify-content:center;border:1px solid var(--ac,var(--gold-dim));font-size:28px;flex-shrink:0;align-self:start;}
+.af-name{font-family:'Cinzel Decorative',serif;font-size:clamp(15px,2vw,20px);color:var(--ac,var(--gold-light));margin-bottom:6px;letter-spacing:1px;}
+.af-type{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+.af-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.4vw,15px);color:var(--muted);line-height:1.8;margin-bottom:12px;}
+.af-detail{font-family:'IM Fell English',serif;font-size:clamp(11px,1.2vw,13px);color:rgba(160,136,96,.7);line-height:1.7;}
+.af-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+.af-tag{border:1px solid var(--ac,rgba(201,162,39,.3));color:var(--muted);font-size:9px;letter-spacing:2px;padding:3px 8px;text-transform:uppercase;}
+
+/* ======== WORLD PAGE ======== */
+#page-world{background:linear-gradient(180deg,var(--bg-deep),var(--bg-mid));}
+.world-full-wrap{max-width:1100px;margin:0 auto;padding:0 5vw clamp(60px,8vw,100px);}
+.world-tabs{display:flex;gap:0;border-bottom:1px solid rgba(201,162,39,.12);margin-bottom:40px;overflow-x:auto;scrollbar-width:none;}
+.world-tabs::-webkit-scrollbar{display:none;}
+.wtab{background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:clamp(9px,1.1vw,11px);letter-spacing:2px;text-transform:uppercase;cursor:pointer;padding:12px 20px;border-bottom:2px solid transparent;white-space:nowrap;transition:all .3s;}
+.wtab:hover{color:var(--text);}
+.wtab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.world-panels .wpanel{display:none;}
+.world-panels .wpanel.active{display:block;animation:fadeIn .4s ease;}
+.wloc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px;}
+.wloc{border:1px solid rgba(201,162,39,.1);background:rgba(7,9,15,.97);padding:clamp(20px,2.5vw,30px);transition:all .3s;}
+.wloc:hover{background:rgba(13,17,32,.99);border-color:rgba(201,162,39,.22);}
+.wloc-icon{font-size:24px;margin-bottom:12px;}
+.wloc-name{font-family:'Cinzel Decorative',serif;font-size:clamp(13px,1.6vw,16px);color:var(--gold-light);margin-bottom:6px;letter-spacing:1px;}
+.wloc-type{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;opacity:.6;}
+.wloc-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(11px,1.2vw,13px);color:var(--muted);line-height:1.7;margin-bottom:10px;}
+.wloc-detail{font-family:'IM Fell English',serif;font-size:clamp(10px,1.1vw,12px);color:rgba(160,136,96,.65);line-height:1.6;}
+.faction-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px;}
+.faction{border:1px solid rgba(201,162,39,.1);background:rgba(7,9,15,.97);padding:clamp(20px,2.5vw,30px);transition:all .3s;}
+.faction:hover{background:rgba(13,17,32,.99);border-color:rgba(201,162,39,.22);}
+.f-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.f-emblem{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid var(--fc,var(--gold-dim));flex-shrink:0;}
+.f-name{font-family:'Cinzel Decorative',serif;font-size:clamp(13px,1.5vw,15px);color:var(--fc,var(--gold-light));margin-bottom:3px;}
+.f-rank{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.f-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(11px,1.2vw,13px);color:var(--muted);line-height:1.7;margin-bottom:10px;}
+.f-members{font-family:'IM Fell English',serif;font-size:clamp(10px,1.1vw,12px);color:rgba(160,136,96,.65);line-height:1.6;}
+.f-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.f-tag{border:1px solid rgba(201,162,39,.18);color:var(--muted);font-size:9px;letter-spacing:1px;padding:3px 8px;}
+
+/* BUTTONS */
+.btn-p{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--bg-deep);border:none;padding:clamp(11px,1.4vw,15px) clamp(22px,2.8vw,38px);font-family:'Cinzel',serif;font-size:clamp(10px,1.1vw,12px);letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;position:relative;overflow:hidden;}
+.btn-p::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.2),transparent);transform:translateX(-100%);transition:transform .5s;}
+.btn-p:hover::before{transform:translateX(100%);}
+.btn-p:hover{box-shadow:0 0 28px rgba(201,162,39,.5),0 0 56px rgba(201,162,39,.18);transform:translateY(-2px);}
+.btn-s{background:transparent;border:1px solid rgba(0,229,255,.4);color:var(--cyan);padding:clamp(11px,1.4vw,15px) clamp(22px,2.8vw,38px);font-family:'Cinzel',serif;font-size:clamp(10px,1.1vw,12px);letter-spacing:3px;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-s:hover{background:rgba(0,229,255,.07);border-color:var(--cyan);box-shadow:0 0 18px rgba(0,229,255,.28);transform:translateY(-2px);}
+
+/* DIVIDER */
+.div-row{display:flex;align-items:center;gap:16px;max-width:500px;margin:0 auto 0;}
+.div-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+.div-d{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 8px var(--gold);}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(201,162,39,.1);padding:36px 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;background:var(--bg-deep);}
+.ft-logo{font-family:'Cinzel Decorative',serif;font-size:clamp(12px,1.6vw,15px);color:var(--gold);opacity:.7;}
+footer p{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(9px,1.1vw,11px);color:var(--muted);opacity:.55;}
+.ft-links{display:flex;gap:20px;}
+.ft-links button{background:none;border:none;font-size:9px;letter-spacing:2px;color:var(--muted);cursor:pointer;text-transform:uppercase;opacity:.5;transition:opacity .3s,color .3s;}
+.ft-links button:hover{opacity:1;color:var(--gold);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ANIMATIONS */
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes flA{from{transform:scaleX(1) scaleY(1) translateX(0);}to{transform:scaleX(.92) scaleY(1.04) translateX(2px);}}
+@keyframes flB{from{transform:scaleX(1) scaleY(1) translateX(0);}to{transform:scaleX(1.06) scaleY(.97) translateX(-2px);}}
+@keyframes cPulse{from{opacity:.7;transform:scale(1);}to{opacity:1;transform:scale(1.15);}}
+@keyframes sFloat{0%,100%{transform:translateY(0);opacity:.5;}50%{transform:translateY(-18px);opacity:1;}}
+@keyframes rPulse{0%,100%{opacity:.2;transform:scale(.95);}50%{opacity:.7;transform:scale(1);}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .story-wrap{grid-template-columns:1fr;}
+  .story-flame{height:220px;}
+  .ab-full-card{grid-template-columns:56px 1fr;gap:14px;}
+  .af-icon{width:56px;height:56px;font-size:20px;}
+}
+@media(max-width:500px){
+  .cd-stats{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <button onclick="nav('home');closeMobile()">Beranda</button>
+  <button onclick="nav('story');closeMobile()">Kisah</button>
+  <button onclick="nav('ranks');closeMobile()">Tingkatan</button>
+  <button onclick="nav('characters');closeMobile()">Karakter</button>
+  <button onclick="nav('abilities');closeMobile()">Kemampuan</button>
+  <button onclick="nav('world');closeMobile()">Dunia</button>
+  <button onclick="nav('mulai');closeMobile()">Mulai Perjalanan</button>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <button class="nav-logo" onclick="nav('home')">BTTH</button>
+  <ul class="nav-links">
+    <li><button onclick="nav('story')" data-page="story">Kisah</button></li>
+    <li><button onclick="nav('ranks')" data-page="ranks">Tingkatan</button></li>
+    <li><button onclick="nav('characters')" data-page="characters">Karakter</button></li>
+    <li><button onclick="nav('abilities')" data-page="abilities">Kemampuan</button></li>
+    <li><button onclick="nav('world')" data-page="world">Dunia</button></li>
+  </ul>
+  <button class="nav-cta" onclick="nav('mulai')">Mulai Perjalanan</button>
+  <button class="hamburger" onclick="openMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ==================== HOME ==================== -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="ering"></div><div class="ering"></div><div class="ering"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Donghua Epic Cultivation Series</div>
+      <h1 class="hero-title">
+        <span class="t1">Battle Through</span>
+        <span class="t2">The Heavens</span>
+      </h1>
+      <p class="hero-sub">"Dari yang Terlemah Hingga Menembus Langit — Perjalanan Xiao Yan Dimulai"</p>
+      <div class="hero-ctas">
+        <button class="btn-p" onclick="nav('story')">Jelajahi Kisah</button>
+        <button class="btn-s" onclick="nav('characters')">Lihat Karakter</button>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Gulir</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+
+  <!-- STORY PREVIEW -->
+  <div class="home-section" style="background:linear-gradient(180deg,var(--bg-deep) 0%,var(--bg-dark) 50%,var(--bg-deep) 100%);">
+    <div class="story-wrap">
+      <div class="story-text reveal">
+        <span class="sec-label">Latar Belakang</span>
+        <h3>Kebangkitan Sang Jenius Tersembunyi</h3>
+        <p>Di Benua Jia Ma, Xiao Yan — seorang pemuda yang pernah dipuji sebagai jenius — tiba-tiba kehilangan semua kekuatan dan reputasinya. Selama tiga tahun ia menjadi bahan ejekan seluruh klan Xiao.</p>
+        <p>Namun di balik kelemahan itu tersimpan rahasia besar: cincin misterius milik ibunya menyembunyikan seorang senior agung bernama Yao Chen yang akan membimbingnya menguasai seni alkimia dan pertempuran.</p>
+        <p>Dengan tekad membara dan api Samadhi sejati, Xiao Yan memulai perjalanan mematahkan semua batasan.</p>
+        <div style="margin-top:28px;"><button class="btn-p" onclick="nav('story')">Baca Selengkapnya</button></div>
+      </div>
+      <div class="story-flame reveal">
+        <svg viewBox="0 0 260 330" width="100%" style="max-width:240px;">
+          <defs>
+            <radialGradient id="fg" cx="50%" cy="80%" r="60%"><stop offset="0%" stop-color="#00e5ff" stop-opacity=".28"/><stop offset="100%" stop-color="#1a6cf5" stop-opacity="0"/></radialGradient>
+          </defs>
+          <ellipse cx="130" cy="296" rx="96" ry="28" fill="url(#fg)"/>
+          <g style="animation:flA 2.5s ease-in-out infinite alternate;"><path d="M130 278C80 238 50 178 70 118 C85 73 110 48 130 18 C150 48 175 73 190 118 C210 178 180 238 130 278Z" fill="#0a2a6e" opacity=".8"/></g>
+          <g style="animation:flB 2s ease-in-out infinite alternate;"><path d="M130 268C90 233 65 173 82 113 C95 73 115 53 130 28 C145 53 165 73 178 113 C195 173 170 233 130 268Z" fill="#1040a0" opacity=".9"/></g>
+          <g style="animation:flA 1.8s ease-in-out .3s infinite alternate;"><path d="M130 252C100 222 78 165 94 108 C106 70 120 53 130 36 C140 53 154 70 166 108 C182 165 160 222 130 252Z" fill="#1a6cf5"/></g>
+          <g style="animation:flB 1.5s ease-in-out .1s infinite alternate;"><path d="M130 232C108 202 92 157 105 106 C114 74 123 58 130 46 C137 58 146 74 155 106 C168 157 152 202 130 232Z" fill="#4090ff"/></g>
+          <g style="animation:flA 1.2s ease-in-out .2s infinite alternate;"><path d="M130 207C116 182 106 147 115 103 C122 78 128 66 130 56 C132 66 138 78 145 103 C154 147 144 182 130 207Z" fill="#70b8ff"/></g>
+          <ellipse cx="130" cy="157" rx="17" ry="26" fill="#b0d8ff" opacity=".7" style="animation:cPulse 1s ease-in-out infinite alternate;"/>
+          <ellipse cx="130" cy="157" rx="7" ry="13" fill="white" opacity=".9" style="animation:cPulse .8s ease-in-out infinite alternate;"/>
+          <circle cx="100" cy="118" r="3" fill="#00e5ff" opacity=".8" style="animation:sFloat 2s ease-in-out .4s infinite;"/>
+          <circle cx="158" cy="98" r="2" fill="#00e5ff" opacity=".6" style="animation:sFloat 2.3s ease-in-out .8s infinite;"/>
+          <circle cx="88" cy="158" r="2" fill="#4090ff" opacity=".7" style="animation:sFloat 1.8s ease-in-out .2s infinite;"/>
+          <circle cx="172" cy="143" r="2.5" fill="#4090ff" opacity=".5" style="animation:sFloat 2.1s ease-in-out 1s infinite;"/>
+          <ellipse cx="130" cy="296" rx="68" ry="11" fill="none" stroke="#1a6cf5" stroke-width="1" opacity=".4" style="animation:rPulse 2s ease-in-out infinite;"/>
+          <ellipse cx="130" cy="296" rx="48" ry="7" fill="none" stroke="#00e5ff" stroke-width=".5" opacity=".6" style="animation:rPulse 2s ease-in-out .5s infinite;"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- RANKS PREVIEW -->
+  <div class="home-section" style="background:var(--bg-mid);">
+    <span class="sec-label reveal">Sistem Kultivasi</span>
+    <h2 class="sec-title reveal">Tingkatan Dou Qi</h2>
+    <p class="sec-desc reveal">Dari Dou Zhe hingga Dou Di — setiap tingkatan adalah perjuangan nyawa dan takdir.</p>
+    <div class="ranks-home-grid">
+      <div class="rank-card reveal" style="--rc:#8b8bff;" onclick="nav('ranks')"><div class="rank-num">I</div><div class="rank-name">Dou Zhe</div><div class="rank-short">Pemula kultivasi</div><div class="rank-stars"><div class="star"></div><div class="star off"></div><div class="star off"></div><div class="star off"></div><div class="star off"></div></div></div>
+      <div class="rank-card reveal" style="--rc:#4fc3f7;" onclick="nav('ranks')"><div class="rank-num">II</div><div class="rank-name">Dou Shi</div><div class="rank-short">Energi mengalir bebas</div><div class="rank-stars"><div class="star"></div><div class="star"></div><div class="star off"></div><div class="star off"></div><div class="star off"></div></div></div>
+      <div class="rank-card reveal" style="--rc:#1a6cf5;" onclick="nav('ranks')"><div class="rank-num">III</div><div class="rank-name">Da Dou Shi</div><div class="rank-short">Bentuk Dou Qi sempurna</div><div class="rank-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div><div class="star off"></div></div></div>
+      <div class="rank-card reveal" style="--rc:#00e5ff;" onclick="nav('ranks')"><div class="rank-num">IV</div><div class="rank-name">Dou Ling</div><div class="rank-short">Roh Dou Qi terbentuk</div><div class="rank-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div></div></div>
+      <div class="rank-card reveal" style="--rc:#c9a227;" onclick="nav('ranks')"><div class="rank-num">V</div><div class="rank-name">Dou Wang</div><div class="rank-short">Raja — bisa terbang</div><div class="rank-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+      <div class="rank-card reveal" style="--rc:#f0d060;" onclick="nav('ranks')"><div class="rank-num">VI</div><div class="rank-name">Dou Huang</div><div class="rank-short">Kaisar pertarungan</div><div class="rank-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+      <div class="rank-card reveal" style="--rc:#ff9a3c;" onclick="nav('ranks')"><div class="rank-num">VII</div><div class="rank-name">Dou Zong</div><div class="rank-short">Leluhur — kekuatan gunung</div><div class="rank-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+      <div class="rank-card reveal" style="--rc:#ff5252;" onclick="nav('ranks')"><div class="rank-num">VIII</div><div class="rank-name">Dou Zun</div><div class="rank-short">Yang Mulia pertarungan</div><div class="rank-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+      <div class="rank-card reveal" style="--rc:#ea80fc;" onclick="nav('ranks')"><div class="rank-num">IX</div><div class="rank-name">Dou Sheng</div><div class="rank-short">Orang Suci — legenda</div><div class="rank-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+      <div class="rank-card reveal" style="--rc:#ffffff;border-color:rgba(255,255,255,.18);" onclick="nav('ranks')"><div class="rank-num">Puncak</div><div class="rank-name">Dou Di</div><div class="rank-short">Kaisar Surgawi — setara dewa</div><div class="rank-stars"><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div></div></div>
+    </div>
+    <div style="text-align:center;margin-top:36px;"><button class="btn-s reveal" onclick="nav('ranks')">Lihat Semua Tingkatan →</button></div>
+  </div>
+
+  <!-- CHARS PREVIEW -->
+  <div class="home-section" style="background:var(--bg-deep);">
+    <span class="sec-label reveal">Para Tokoh Utama</span>
+    <h2 class="sec-title reveal">Karakter Legendaris</h2>
+    <p class="sec-desc reveal">Setiap jiwa memiliki jalan takdirnya sendiri di dunia yang kejam dan megah ini.</p>
+    <div class="chars-home-grid">
+      <div class="char-card reveal" style="--cc:#1a6cf5;" onclick="nav('characters')">
+        <div class="char-vis" style="background:radial-gradient(ellipse at 50% 80%,rgba(26,108,245,.2) 0%,transparent 70%);">
+          <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4090ff" stop-opacity=".4"/><stop offset="100%" stop-color="#1a6cf5" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cg1)"/><circle cx="55" cy="55" r="40" fill="none" stroke="#1a6cf5" stroke-width=".5" stroke-dasharray="4 4" opacity=".5"/><circle cx="55" cy="55" r="28" fill="none" stroke="#4090ff" stroke-width="1" opacity=".7"/><path d="M55 20L62 42L85 42L67 56L73 78L55 64L37 78L43 56L25 42L48 42Z" fill="#1a6cf5" opacity=".9"/><circle cx="55" cy="55" r="8" fill="#00e5ff"/><circle cx="55" cy="55" r="4" fill="white" opacity=".9"/></svg>
+        </div>
+        <div class="char-info"><div class="char-name">Xiao Yan</div><div class="char-title-tag">Sang Ahli Alkimia · Penguasa Api</div><p class="char-desc-short">Pewaris klan Xiao yang bangkit dari kejatuhan. Menguasai api Samadhi Tiga Warna legendaris.</p><div class="power-row"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:95%;"></div></div></div></div>
+      </div>
+      <div class="char-card reveal" style="--cc:#c9a227;" onclick="nav('characters')">
+        <div class="char-vis" style="background:radial-gradient(ellipse at 50% 80%,rgba(201,162,39,.2) 0%,transparent 70%);">
+          <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f0d060" stop-opacity=".4"/><stop offset="100%" stop-color="#c9a227" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cg2)"/><path d="M55 15L58 38L80 28L67 48L90 52L68 60L80 80L58 70L55 93L52 70L30 80L42 60L20 52L43 48L30 28L52 38Z" fill="#c9a227" opacity=".9"/><circle cx="55" cy="55" r="12" fill="#f0d060"/><circle cx="55" cy="55" r="5" fill="#fff8e0" opacity=".9"/></svg>
+        </div>
+        <div class="char-info"><div class="char-name">Yao Lao</div><div class="char-title-tag">Senior Agung · Dou Sheng</div><p class="char-desc-short">Guru agung yang terjebak dalam cincin. Ahli alkimia terhebat dalam sejarah benua.</p><div class="power-row"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:88%;"></div></div></div></div>
+      </div>
+      <div class="char-card reveal" style="--cc:#ea80fc;" onclick="nav('characters')">
+        <div class="char-vis" style="background:radial-gradient(ellipse at 50% 80%,rgba(234,128,252,.15) 0%,transparent 70%);">
+          <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ea80fc" stop-opacity=".3"/><stop offset="100%" stop-color="#8b2be2" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cg3)"/><circle cx="55" cy="55" r="42" fill="none" stroke="#8b2be2" stroke-width=".5" opacity=".4"/><path d="M55 22C68 35 80 32 82 48C84 64 72 72 55 85C38 72 26 64 28 48C30 32 42 35 55 22Z" fill="#8b2be2" opacity=".8"/><path d="M55 30C64 40 74 38 75 50C76 62 68 68 55 78C42 68 34 62 35 50C36 38 46 40 55 30Z" fill="#ea80fc" opacity=".6"/><circle cx="55" cy="54" r="9" fill="#ea80fc" opacity=".8"/><circle cx="55" cy="54" r="4" fill="white" opacity=".8"/></svg>
+        </div>
+        <div class="char-info"><div class="char-name">Medusa</div><div class="char-title-tag">Ratu Ular · Dou Zun</div><p class="char-desc-short">Penguasa klan ular berbisa. Musuh sekaligus sekutu — hubungannya dengan Xiao Yan penuh misteri.</p><div class="power-row"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:82%;"></div></div></div></div>
+      </div>
+      <div class="char-card reveal" style="--cc:#ff5252;" onclick="nav('characters')">
+        <div class="char-vis" style="background:radial-gradient(ellipse at 50% 80%,rgba(255,82,82,.15) 0%,transparent 70%);">
+          <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cg4" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff5252" stop-opacity=".3"/><stop offset="100%" stop-color="#b71c1c" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cg4)"/><rect x="32" y="32" width="46" height="46" rx="4" fill="#b71c1c" opacity=".7" transform="rotate(15 55 55)"/><rect x="38" y="38" width="34" height="34" rx="3" fill="#ff5252" opacity=".6" transform="rotate(15 55 55)"/><circle cx="55" cy="55" r="10" fill="#ff7070"/><circle cx="55" cy="55" r="4" fill="white" opacity=".8"/></svg>
+        </div>
+        <div class="char-info"><div class="char-name">Nalan Yanran</div><div class="char-title-tag">Pewaris Sekte Yunlan</div><p class="char-desc-short">Calon tunangan Xiao Yan yang memutuskan ikatan. Pertandingan mereka memicu seluruh petualangan.</p><div class="power-row"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:65%;"></div></div></div></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px;"><button class="btn-s reveal" onclick="nav('characters')">Lihat Semua Karakter →</button></div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-sec">
+    <span class="qmark">"</span>
+    <blockquote class="reveal">Langit dapat hancur dan bumi dapat runtuh, namun tekadku tidak akan pernah padam — api ini akan membakar segalanya hingga aku menjangkau puncak surga.</blockquote>
+    <p class="q-author reveal">— Xiao Yan, Battle Through the Heavens</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-sec">
+    <h2 class="cta-title reveal">Mulailah Perjalananmu</h2>
+    <p class="cta-sub reveal">Saksikan Xiao Yan bangkit dari debu menjadi penakluk surga</p>
+    <div class="cta-btns reveal">
+      <a href="https://anichin.cafe/?s=Battle+Through+the+Heavens" target="_blank" rel="noopener" class="btn-p">▶ Tonton Sekarang</a>
+      <a href="https://id.wikipedia.org/wiki/Battle_Through_the_Heavens" target="_blank" rel="noopener" class="btn-s">Baca Sinopsis</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft-logo">BTTH</div>
+    <p>Battle Through the Heavens © Fan Site — Karya asli oleh Tian Can Tu Dou</p>
+    <div class="ft-links">
+      <button onclick="nav('home')">Beranda</button>
+      <button onclick="nav('story')">Kisah</button>
+      <button onclick="nav('characters')">Karakter</button>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== STORY PAGE ==================== -->
+<div class="page" id="page-story">
+  <div class="page-header">
+    <button class="ph-back" onclick="nav('home')">Kembali ke Beranda</button>
+    <span class="sec-label">Latar Belakang</span>
+    <h2 class="sec-title">Kisah Battle Through the Heavens</h2>
+    <p class="sec-desc">Perjalanan epik seorang pemuda dari keterpurukan menuju puncak langit</p>
+  </div>
+  <div style="max-width:860px;margin:0 auto;padding:0 5vw clamp(60px,8vw,100px);">
+    <div style="border:1px solid rgba(201,162,39,.12);background:rgba(10,14,24,.8);padding:clamp(24px,4vw,48px);margin-bottom:24px;">
+      <h3 style="color:var(--gold-light);font-size:clamp(16px,2vw,22px);margin-bottom:20px;letter-spacing:2px;">Awal Mula</h3>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.9;margin-bottom:14px;">Di Benua Jia Ma yang luas, seorang anak bernama <strong style="color:var(--gold);">Xiao Yan</strong> lahir di Klan Xiao sebagai seorang jenius yang luar biasa. Sejak usia muda, bakatnya sudah melampaui semua teman sebayanya, dan namanya disegani di seluruh kota Wutan.</p>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.9;margin-bottom:14px;">Namun saat berusia 11 tahun, sebuah kejadian misterius merenggut seluruh kekuatannya. Energi Dou Qi yang dulu mengalir deras tiba-tiba terhenti. Selama tiga tahun berikutnya, Xiao Yan menjadi bahan ejekan — seorang "mantan jenius" yang tidak berguna.</p>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.9;">Diperburuk lagi, calon tunangannya <strong style="color:var(--gold);">Nalan Yanran</strong> dari Sekte Yunlan datang secara terbuka untuk membatalkan pertunangan mereka — sebuah penghinaan terbesar yang memicu bara dendam dan tekad tak tergoyahkan dalam diri Xiao Yan.</p>
+    </div>
+    <div style="border:1px solid rgba(0,229,255,.1);background:rgba(10,14,24,.8);padding:clamp(24px,4vw,48px);margin-bottom:24px;">
+      <h3 style="color:var(--cyan);font-size:clamp(16px,2vw,22px);margin-bottom:20px;letter-spacing:2px;">Rahasia Cincin</h3>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.9;margin-bottom:14px;">Dalam keputusasaan, Xiao Yan menemukan bahwa cincin peninggalan ibunya menyimpan jiwa seorang praktisi luar biasa bernama <strong style="color:var(--gold);">Yao Lao (Yao Chen)</strong> — seorang Dou Sheng legendaris dan Grandmaster Alkimia yang bersembunyi dari musuh-musuhnya.</p>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.9;margin-bottom:14px;">Di bawah bimbingan Yao Lao yang ketat, Xiao Yan belajar seni alkimia — meracik pil kultivasi, memahami farmakologi, dan secara bertahap mendapatkan kembali kekuatannya dengan kecepatan yang mengejutkan semua orang.</p>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.9;">Yao Lao juga mengungkapkan bahwa hilangnya kekuatan Xiao Yan bukan karena cacat bawaan — melainkan karena sesuatu yang jauh lebih gelap dan berbahaya tersimpan di dalam tubuhnya.</p>
+    </div>
+    <div style="border:1px solid rgba(234,128,252,.1);background:rgba(10,14,24,.8);padding:clamp(24px,4vw,48px);margin-bottom:24px;">
+      <h3 style="color:#ea80fc;font-size:clamp(16px,2vw,22px);margin-bottom:20px;letter-spacing:2px;">Jalan Menuju Langit</h3>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.9;margin-bottom:14px;">Perjalanan Xiao Yan membawanya ke berbagai pelosok benua — Akademi Canaan tempat ia bertemu rival dan sekutu terkuat, Gurun Taklamakan yang berbahaya, wilayah klan ular berbisa di bawah kekuasaan Ratu <strong style="color:var(--gold);">Medusa</strong>, hingga akhirnya ke Benua Zhongzhou yang jauh lebih luas dan berbahaya.</p>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.9;margin-bottom:14px;">Di setiap langkah, Xiao Yan menghadapi ujian yang mengancam jiwa — melawan Dou Wang yang puluhan kali lebih kuat, menerobos Dou Huang dengan kecerdasan, dan akhirnya menghancurkan Sekte Yunlan untuk membalas dendam ayahnya.</p>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.9;">Dengan api Samadhi Tiga Warna — gabungan tiga api kuno yang dianggap mustahil disatukan — Xiao Yan terus menembus batas demi batas, menapaki jalan menuju puncak yang hanya bisa dicapai oleh seorang Dou Di.</p>
+    </div>
+    <div style="text-align:center;padding-top:12px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://anichin.cafe/?s=Battle+Through+the+Heavens" target="_blank" rel="noopener" class="btn-p">▶ Tonton Sekarang</a>
+      <a href="https://id.wikipedia.org/wiki/Battle_Through_the_Heavens" target="_blank" rel="noopener" class="btn-s">Wikipedia Lengkap</a>
+    </div>
+  </div>
+  <footer>
+    <div class="ft-logo">BTTH</div>
+    <p>Battle Through the Heavens © Fan Site</p>
+    <div class="ft-links"><button onclick="nav('home')">Beranda</button><button onclick="nav('characters')">Karakter</button></div>
+  </footer>
+</div>
+
+<!-- ==================== RANKS PAGE ==================== -->
+<div class="page" id="page-ranks">
+  <div class="page-header">
+    <button class="ph-back" onclick="nav('home')">Kembali ke Beranda</button>
+    <span class="sec-label">Sistem Kultivasi</span>
+    <h2 class="sec-title">Seluruh Tingkatan Dou Qi</h2>
+    <p class="sec-desc">Hierarki kekuatan yang mengatur seluruh Benua Dou Qi — dari pemula hingga setara dewa</p>
+  </div>
+  <div class="ranks-full-grid">
+    <div class="rank-full-card" style="--rc:#8b8bff;"><div class="rf-num">Tingkat I</div><div class="rf-name">Dou Zhe</div><div class="rf-desc">Pemula pertarungan yang baru mengumpulkan energi Dou Qi dalam tubuh untuk pertama kalinya. Ini adalah titik awal bagi semua praktisi.</div><div class="rf-detail">Xiao Yan kembali ke tingkat ini setelah kehilangan kekuatannya. Jumlah Dou Zhe sangat banyak — mereka adalah yang paling umum di seluruh benua. Dengan kerja keras, seorang Dou Zhe bisa naik tingkat dalam hitungan bulan.</div><div class="rf-stars"><div class="star"></div><div class="star off"></div><div class="star off"></div><div class="star off"></div><div class="star off"></div></div></div>
+    <div class="rank-full-card" style="--rc:#4fc3f7;"><div class="rf-num">Tingkat II</div><div class="rf-name">Dou Shi</div><div class="rf-desc">Energi Dou Qi mengalir lancar melalui seluruh meridian. Mampu memanifestasikan Dou Qi keluar dari tubuh dengan kontrol yang lebih baik.</div><div class="rf-detail">Pada tahap ini, praktisi sudah bisa meningkatkan kecepatan, kekuatan, dan ketahanan fisik secara signifikan. Bisa menggunakan beberapa teknik tempur dasar.</div><div class="rf-stars"><div class="star"></div><div class="star"></div><div class="star off"></div><div class="star off"></div><div class="star off"></div></div></div>
+    <div class="rank-full-card" style="--rc:#1a6cf5;"><div class="rf-num">Tingkat III</div><div class="rf-name">Da Dou Shi</div><div class="rf-desc">Dou Qi mencapai bentuk yang lebih sempurna. Seorang Da Dou Shi sudah dipandang sebagai praktisi serius yang layak dihormati.</div><div class="rf-detail">Xiao Yan berhasil kembali ke tingkat ini dalam waktu yang sangat singkat berkat bimbingan Yao Lao. Kemampuannya sudah jauh melampaui rata-rata Da Dou Shi karena penguasaan api dan alkimia.</div><div class="rf-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div><div class="star off"></div></div></div>
+    <div class="rank-full-card" style="--rc:#00e5ff;"><div class="rf-num">Tingkat IV</div><div class="rf-name">Dou Ling</div><div class="rf-desc">Praktisi mulai membentuk "roh" Dou Qi di dalam tubuh. Kekuatan fisik dan spiritual meningkat drastis melampaui manusia biasa.</div><div class="rf-detail">Dou Ling sudah bisa terbang sebentar dan menyerang dari jarak jauh dengan lebih efektif. Mereka sudah dianggap kuat di tingkat klan kecil dan kota.</div><div class="rf-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div></div></div>
+    <div class="rank-full-card" style="--rc:#c9a227;"><div class="rf-num">Tingkat V</div><div class="rf-name">Dou Wang</div><div class="rf-desc">Raja pertarungan. Kemampuan terbang melayang di udara diraih untuk pertama kalinya — sebuah tonggak yang membedakan praktisi biasa dari yang luar biasa.</div><div class="rf-detail">Seorang Dou Wang bisa memimpin pasukan besar, dan di beberapa kerajaan kecil, mereka adalah kekuatan yang diperhitungkan. Hanya sebagian kecil praktisi yang mampu mencapai tahap ini.</div><div class="rf-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+    <div class="rank-full-card" style="--rc:#f0d060;"><div class="rf-num">Tingkat VI</div><div class="rf-name">Dou Huang</div><div class="rf-desc">Kaisar pertarungan. Dou Qi bertransformasi menjadi Dou Huang Qi yang lebih murni dan berdaya hancur yang jauh lebih besar.</div><div class="rf-detail">Di Kerajaan Jia Ma, seorang Dou Huang sudah setara dengan petinggi militer tertinggi. Sekte dan klan besar bergantung pada Dou Huang sebagai tulang punggung kekuatan mereka.</div><div class="rf-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+    <div class="rank-full-card" style="--rc:#ff9a3c;"><div class="rf-num">Tingkat VII</div><div class="rf-name">Dou Zong</div><div class="rf-desc">Leluhur pertarungan. Kekuatan menghancurkan gunung dan membelah sungai menjadi bukan sekadar ungkapan — melainkan kenyataan.</div><div class="rf-detail">Seorang Dou Zong dapat mengendalikan elemen alam dengan jauh lebih bebas. Banyak Sekte besar dipimpin oleh Dou Zong. Tingkat ini sudah sangat langka bahkan di seluruh benua.</div><div class="rf-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+    <div class="rank-full-card" style="--rc:#ff5252;"><div class="rf-num">Tingkat VIII</div><div class="rf-name">Dou Zun</div><div class="rf-desc">Yang Mulia pertarungan. Sangat langka — setiap Dou Zun mampu mendirikan sekte atau klan sendiri dan menjadi penguasa wilayah luas.</div><div class="rf-detail">Medusa, Ratu Klan Ular, adalah seorang Dou Zun. Kekuatannya mampu meratakan kota dalam sekejap. Seorang Dou Zun bisa hidup selama ratusan tahun.</div><div class="rf-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+    <div class="rank-full-card" style="--rc:#ea80fc;"><div class="rf-num">Tingkat IX</div><div class="rf-name">Dou Sheng</div><div class="rf-desc">Orang Suci pertarungan. Legenda hidup yang hanya ada beberapa di seluruh benua. Keberadaan mereka mengubah keseimbangan kekuatan dunia.</div><div class="rf-detail">Yao Lao adalah seorang Dou Sheng sebelum jiwanya terjebak. Pada tingkat ini, praktisi bisa menciptakan ruang dimensi sendiri dan memanipulasi hukum alam semesta secara terbatas. Seorang Dou Sheng bisa hidup ribuan tahun.</div><div class="rf-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div></div>
+    <div class="rank-full-card" style="--rc:#ffffff;border-color:rgba(255,255,255,.2);"><div class="rf-num">Puncak Mutlak</div><div class="rf-name">Dou Di</div><div class="rf-desc">Kaisar Surgawi. Melampaui segala batas yang dikenal manusia. Makhluk setingkat dewa — tak terkalahkan, abadi, dan menguasai hukum semesta sepenuhnya.</div><div class="rf-detail">Tidak ada yang diketahui tentang Dou Di selain legendanya. Mereka yang mencapai Dou Di dipercaya telah melampaui konsep kehidupan dan kematian. Seluruh perjalanan Xiao Yan menuju puncak ini adalah inti dari seluruh kisah BTTH.</div><div class="rf-stars"><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div><div class="star" style="background:#fff;box-shadow:0 0 8px #fff;"></div></div></div>
+  </div>
+  <footer><div class="ft-logo">BTTH</div><p>Battle Through the Heavens © Fan Site</p><div class="ft-links"><button onclick="nav('home')">Beranda</button><button onclick="nav('characters')">Karakter</button></div></footer>
+</div>
+
+<!-- ==================== CHARACTERS PAGE ==================== -->
+<div class="page" id="page-characters">
+  <div class="page-header">
+    <button class="ph-back" onclick="nav('home')">Kembali ke Beranda</button>
+    <span class="sec-label">Para Tokoh</span>
+    <h2 class="sec-title">Karakter Battle Through the Heavens</h2>
+    <p class="sec-desc">Biografi lengkap para tokoh yang membentuk dunia Dou Qi</p>
+  </div>
+  <div class="chars-detail-grid">
+    <div class="char-detail-card" style="--cc:#1a6cf5;">
+      <div class="cd-visual" style="background:radial-gradient(ellipse at 50% 80%,rgba(26,108,245,.2) 0%,transparent 70%);">
+        <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cdg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4090ff" stop-opacity=".4"/><stop offset="100%" stop-color="#1a6cf5" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cdg1)"/><circle cx="55" cy="55" r="40" fill="none" stroke="#1a6cf5" stroke-width=".5" stroke-dasharray="4 4" opacity=".5"/><path d="M55 20L62 42L85 42L67 56L73 78L55 64L37 78L43 56L25 42L48 42Z" fill="#1a6cf5" opacity=".9"/><circle cx="55" cy="55" r="8" fill="#00e5ff"/><circle cx="55" cy="55" r="4" fill="white" opacity=".9"/></svg>
+      </div>
+      <div class="cd-body">
+        <div class="cd-name">Xiao Yan</div>
+        <div class="cd-title">Sang Ahli Alkimia · Penguasa Api Samadhi</div>
+        <p class="cd-bio">Protagonis utama BTTH. Lahir di Klan Xiao sebagai jenius sejati, namun kehilangan semua kekuatan secara misterius di usia 11 tahun. Selama tiga tahun menjadi bahan ejekan, hingga menemukan Yao Lao dalam cincinnya. Dengan bimbingan Yao Lao, ia bangkit menjadi ahli alkimia paling berbakat dan pejuang yang menakutkan. Perjalanannya adalah tentang tekad — menghadapi musuh yang jauh lebih kuat dengan kecerdasan, keberanian, dan api yang tak pernah padam.</p>
+        <div class="cd-stats">
+          <div class="cd-stat"><div class="cs-lbl">Tingkatan Awal</div><div class="cs-val">Dou Zhe (setelah jatuh)</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Tingkatan Puncak</div><div class="cs-val">Dou Di</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Spesialisasi</div><div class="cs-val">Alkimia & Api Kuno</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Asal</div><div class="cs-val">Klan Xiao, Kota Wutan</div></div>
+        </div>
+        <div class="cd-power"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:95%;"></div></div></div>
+        <div class="cd-abilities"><div class="cd-ab-title">Kemampuan Utama</div><div class="cd-ab-list"><span class="ab-tag">Api Samadhi 3 Warna</span><span class="ab-tag">Alkimia Lv.7</span><span class="ab-tag">Transformasi Naga Api</span><span class="ab-tag">Seni Pedang Liaoyuan</span></div></div>
+      </div>
+    </div>
+    <div class="char-detail-card" style="--cc:#c9a227;">
+      <div class="cd-visual" style="background:radial-gradient(ellipse at 50% 80%,rgba(201,162,39,.2) 0%,transparent 70%);">
+        <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cdg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f0d060" stop-opacity=".4"/><stop offset="100%" stop-color="#c9a227" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cdg2)"/><path d="M55 15L58 38L80 28L67 48L90 52L68 60L80 80L58 70L55 93L52 70L30 80L42 60L20 52L43 48L30 28L52 38Z" fill="#c9a227" opacity=".9"/><circle cx="55" cy="55" r="12" fill="#f0d060"/><circle cx="55" cy="55" r="5" fill="#fff8e0" opacity=".9"/></svg>
+      </div>
+      <div class="cd-body">
+        <div class="cd-name">Yao Lao</div>
+        <div class="cd-title">Senior Agung · Grandmaster Alkimia · Dou Sheng</div>
+        <p class="cd-bio">Guru sekaligus pelindung Xiao Yan. Semasa hidupnya, Yao Lao dikenal sebagai Grandmaster Alkimia peringkat teratas di benua — ahli meracik pil yang tak tertandingi. Setelah jiwanya diserang musuh misterius, ia terpaksa bersembunyi dalam cincin peninggalan muridnya. Di sana ia melatih Xiao Yan dengan penuh dedikasi, menurunkan semua ilmu dan pengalaman hidupnya kepada sang pemuda. Hubungan mereka melampaui guru dan murid — ia adalah sosok ayah kedua bagi Xiao Yan.</p>
+        <div class="cd-stats">
+          <div class="cd-stat"><div class="cs-lbl">Tingkatan</div><div class="cs-val">Dou Sheng (Tingkat IX)</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Peran</div><div class="cs-val">Guru & Pelindung</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Spesialisasi</div><div class="cs-val">Alkimia Tingkat Tertinggi</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Status</div><div class="cs-val">Jiwa dalam Cincin</div></div>
+        </div>
+        <div class="cd-power"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:88%;"></div></div></div>
+        <div class="cd-abilities"><div class="cd-ab-title">Kemampuan Utama</div><div class="cd-ab-list"><span class="ab-tag">Alkimia Peringkat Max</span><span class="ab-tag">Dou Sheng Qi</span><span class="ab-tag">Pengetahuan Api Kuno</span></div></div>
+      </div>
+    </div>
+    <div class="char-detail-card" style="--cc:#ea80fc;">
+      <div class="cd-visual" style="background:radial-gradient(ellipse at 50% 80%,rgba(234,128,252,.15) 0%,transparent 70%);">
+        <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cdg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ea80fc" stop-opacity=".3"/><stop offset="100%" stop-color="#8b2be2" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cdg3)"/><path d="M55 22C68 35 80 32 82 48C84 64 72 72 55 85C38 72 26 64 28 48C30 32 42 35 55 22Z" fill="#8b2be2" opacity=".8"/><path d="M55 30C64 40 74 38 75 50C76 62 68 68 55 78C42 68 34 62 35 50C36 38 46 40 55 30Z" fill="#ea80fc" opacity=".6"/><circle cx="55" cy="54" r="9" fill="#ea80fc" opacity=".8"/><circle cx="55" cy="54" r="4" fill="white" opacity=".8"/></svg>
+      </div>
+      <div class="cd-body">
+        <div class="cd-name">Medusa</div>
+        <div class="cd-title">Ratu Klan Ular · Dou Zun · Queen Cai Lin</div>
+        <p class="cd-bio">Ratu paling kuat dari Klan Ular Berbisa. Medusa adalah seorang Dou Zun dengan kekuatan yang membuat seluruh benua gentar. Pertemuan pertamanya dengan Xiao Yan berujung pada konflik sengit, namun seiring waktu ia menyadari bahwa Xiao Yan berbeda dari manusia biasa. Dengan kecantikan yang dingin dan kekuatan yang membekukan jiwa, Medusa menjadi sekutu terpercaya — bahkan lebih dari itu. Ia juga dikenal sebagai Cai Lin di kemudian hari.</p>
+        <div class="cd-stats">
+          <div class="cd-stat"><div class="cs-lbl">Tingkatan</div><div class="cs-val">Dou Zun (Tingkat VIII)</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Peran</div><div class="cs-val">Sekutu / Pelindung</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Spesialisasi</div><div class="cs-val">Racun & Transformasi Ular</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Klan</div><div class="cs-val">Klan Ular Berbisa</div></div>
+        </div>
+        <div class="cd-power"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:82%;"></div></div></div>
+        <div class="cd-abilities"><div class="cd-ab-title">Kemampuan Utama</div><div class="cd-ab-list"><span class="ab-tag">Seni Ular Berbisa</span><span class="ab-tag">Transformasi Naga Ular</span><span class="ab-tag">Pandangan Mematikan</span></div></div>
+      </div>
+    </div>
+    <div class="char-detail-card" style="--cc:#ff5252;">
+      <div class="cd-visual" style="background:radial-gradient(ellipse at 50% 80%,rgba(255,82,82,.15) 0%,transparent 70%);">
+        <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cdg4" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff5252" stop-opacity=".3"/><stop offset="100%" stop-color="#b71c1c" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cdg4)"/><rect x="32" y="32" width="46" height="46" rx="4" fill="#b71c1c" opacity=".7" transform="rotate(15 55 55)"/><rect x="38" y="38" width="34" height="34" rx="3" fill="#ff5252" opacity=".6" transform="rotate(15 55 55)"/><circle cx="55" cy="55" r="10" fill="#ff7070"/><circle cx="55" cy="55" r="4" fill="white" opacity=".8"/></svg>
+      </div>
+      <div class="cd-body">
+        <div class="cd-name">Nalan Yanran</div>
+        <div class="cd-title">Pewaris Sekte Yunlan · Dou Huang</div>
+        <p class="cd-bio">Calon tunangan Xiao Yan yang datang secara terbuka untuk membatalkan pertunangan mereka — sebuah tindakan yang menjadi pemicu utama seluruh petualangan. Nalan Yanran sebenarnya bukan sosok jahat; ia hanya dibentuk oleh ekspektasi dan prestise sektanya. Pertemuannya kembali dengan Xiao Yan yang telah berkembang sangat jauh membuat dirinya menghadapi kenyataan yang menyakitkan.</p>
+        <div class="cd-stats">
+          <div class="cd-stat"><div class="cs-lbl">Tingkatan</div><div class="cs-val">Dou Huang (Tingkat VI)</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Peran</div><div class="cs-val">Katalis Cerita</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Afiliasi</div><div class="cs-val">Sekte Yunlan</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Hubungan</div><div class="cs-val">Mantan Tunangan Xiao Yan</div></div>
+        </div>
+        <div class="cd-power"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:65%;"></div></div></div>
+        <div class="cd-abilities"><div class="cd-ab-title">Kemampuan Utama</div><div class="cd-ab-list"><span class="ab-tag">Teknik Yunlan</span><span class="ab-tag">Dou Huang Qi</span><span class="ab-tag">Seni Pedang Sekte</span></div></div>
+      </div>
+    </div>
+    <div class="char-detail-card" style="--cc:#1db888;">
+      <div class="cd-visual" style="background:radial-gradient(ellipse at 50% 80%,rgba(29,184,136,.15) 0%,transparent 70%);">
+        <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cdg5" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1db888" stop-opacity=".4"/><stop offset="100%" stop-color="#0a5e44" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cdg5)"/><polygon points="55,18 68,40 92,44 74,62 79,86 55,74 31,86 36,62 18,44 42,40" fill="#1db888" opacity=".85"/><circle cx="55" cy="55" r="10" fill="#5fffd8"/><circle cx="55" cy="55" r="4" fill="white" opacity=".9"/></svg>
+      </div>
+      <div class="cd-body">
+        <div class="cd-name">Xiao Xun Er</div>
+        <div class="cd-title">Kekasih Xiao Yan · Keturunan Klan Gu</div>
+        <p class="cd-bio">Gadis misterius yang tumbuh bersama Xiao Yan sejak kecil. Keindahannya tak tertandingi, namun yang lebih mengejutkan adalah latar belakangnya — ia adalah anggota Klan Gu, salah satu dari empat klan tertua dan terkuat di Benua Zhongzhou. Selalu percaya pada Xiao Yan bahkan di saat semua orang mengejeknya. Kekuatannya yang sesungguhnya baru terungkap jauh kemudian.</p>
+        <div class="cd-stats">
+          <div class="cd-stat"><div class="cs-lbl">Klan</div><div class="cs-val">Klan Gu (Kuno)</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Peran</div><div class="cs-val">Cinta Utama Xiao Yan</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Spesialisasi</div><div class="cs-val">Api Emas Klan Gu</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Hubungan</div><div class="cs-val">Sahabat sejak kecil</div></div>
+        </div>
+        <div class="cd-power"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:79%;"></div></div></div>
+        <div class="cd-abilities"><div class="cd-ab-title">Kemampuan Utama</div><div class="cd-ab-list"><span class="ab-tag">Api Emas Kuno</span><span class="ab-tag">Teknik Klan Gu</span><span class="ab-tag">Konstitusi Langka</span></div></div>
+      </div>
+    </div>
+    <div class="char-detail-card" style="--cc:#ff9a3c;">
+      <div class="cd-visual" style="background:radial-gradient(ellipse at 50% 80%,rgba(255,154,60,.15) 0%,transparent 70%);">
+        <svg viewBox="0 0 110 110" width="100" height="100"><defs><radialGradient id="cdg6" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff9a3c" stop-opacity=".4"/><stop offset="100%" stop-color="#a05010" stop-opacity="0"/></radialGradient></defs><circle cx="55" cy="55" r="50" fill="url(#cdg6)"/><rect x="28" y="28" width="54" height="54" rx="3" fill="#a05010" opacity=".7"/><rect x="36" y="36" width="38" height="38" rx="2" fill="#ff9a3c" opacity=".5"/><line x1="28" y1="28" x2="82" y2="82" stroke="#ffb060" stroke-width="2" opacity=".6"/><line x1="82" y1="28" x2="28" y2="82" stroke="#ffb060" stroke-width="2" opacity=".6"/><circle cx="55" cy="55" r="8" fill="#ffb060"/><circle cx="55" cy="55" r="3.5" fill="white" opacity=".9"/></svg>
+      </div>
+      <div class="cd-body">
+        <div class="cd-name">Hai Bo Dong</div>
+        <div class="cd-title">Tua Es · Dou Wang Puncak</div>
+        <p class="cd-bio">Seorang Dou Wang senior yang pertama kali bertemu Xiao Yan saat berdebat soal pil kultivasi. Awalnya meremehkan sang pemuda, namun setelah menyaksikan kemampuan alkimia Xiao Yan yang luar biasa, ia menjadi sekutu setia. Hai Bo Dong menguasai elemen es dan dikenal sebagai "Tua Es" — pejuang berpengalaman dengan reputasi panjang di Benua Jia Ma.</p>
+        <div class="cd-stats">
+          <div class="cd-stat"><div class="cs-lbl">Tingkatan</div><div class="cs-val">Dou Wang Puncak</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Peran</div><div class="cs-val">Sekutu Setia</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Spesialisasi</div><div class="cs-val">Elemen Es & Pembekuan</div></div>
+          <div class="cd-stat"><div class="cs-lbl">Julukan</div><div class="cs-val">Tua Es</div></div>
+        </div>
+        <div class="cd-power"><span class="pw-lbl">Kekuatan</span><div class="pw-bg"><div class="pw-fill" style="width:60%;"></div></div></div>
+        <div class="cd-abilities"><div class="cd-ab-title">Kemampuan Utama</div><div class="cd-ab-list"><span class="ab-tag">Seni Es Agung</span><span class="ab-tag">Pembekuan Total</span><span class="ab-tag">Badai Salju</span></div></div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="ft-logo">BTTH</div><p>Battle Through the Heavens © Fan Site</p><div class="ft-links"><button onclick="nav('home')">Beranda</button><button onclick="nav('ranks')">Tingkatan</button></div></footer>
+</div>
+
+<!-- ==================== ABILITIES PAGE ==================== -->
+<div class="page" id="page-abilities">
+  <div class="page-header">
+    <button class="ph-back" onclick="nav('home')">Kembali ke Beranda</button>
+    <span class="sec-label">Teknik Tempur</span>
+    <h2 class="sec-title">Kemampuan Xiao Yan</h2>
+    <p class="sec-desc">Penjelasan lengkap setiap kemampuan dan teknik yang dikuasai Xiao Yan dalam perjalanannya</p>
+  </div>
+  <div class="ab-full-grid">
+    <div class="ab-full-card" style="--ac:#00e5ff;">
+      <div class="af-icon" style="--ac:#00e5ff;">🔥</div>
+      <div>
+        <div class="af-name">Samadhi Tiga Warna</div>
+        <div class="af-type">Api Kuno · Tingkat Dewa</div>
+        <p class="af-desc">Api paling murni dan paling mematikan di dunia. Xiao Yan berhasil menggabungkan tiga api kuno yang berbeda menjadi satu nyala tunggal yang memiliki tiga lapisan warna — sebuah pencapaian yang dianggap mustahil oleh para ahli alkimia bahkan yang paling tua sekalipun.</p>
+        <p class="af-detail">Api kuno pertama adalah Qinglian Earth Heart Fire yang ditemukan di Gua Api Purba, api kuno ke-dua diperoleh dari pertarungan mematikan, dan api ketiga adalah warisan kuno yang diturunkan dari klan tersembunyi. Ketika ketiga api ini bersatu dalam tubuh Xiao Yan, kekuatannya melampaui hampir semua Dou Sheng. Api ini mampu membakar jiwa, menghancurkan ruang, dan bahkan melawan hukum semesta.</p>
+        <div class="af-tags"><span class="af-tag">Api Kuno</span><span class="af-tag">Anti-Jiwa</span><span class="af-tag">Gabungan 3 Api</span><span class="af-tag">Level Dewa</span></div>
+      </div>
+    </div>
+    <div class="ab-full-card" style="--ac:#c9a227;">
+      <div class="af-icon" style="--ac:#c9a227;">⚗️</div>
+      <div>
+        <div class="af-name">Alkimia Tingkat Tujuh Bintang</div>
+        <div class="af-type">Seni Alkimia · Grandmaster</div>
+        <p class="af-desc">Keahlian meracik pil kultivasi Xiao Yan berkembang dari nol hingga melampaui semua alkimiawan zamannya. Di bawah bimbingan Yao Lao, ia belajar mengenal ribuan jenis bahan, ramuan, dan formula kuno yang bahkan sudah dilupakan dunia.</p>
+        <p class="af-detail">Alkimia dalam BTTH bukan sekadar ilmu meracik obat — ini adalah seni menggabungkan energi, api, dan bahan-bahan langka untuk menciptakan pil yang bisa meningkatkan kultivasi, menyembuhkan luka fatal, bahkan mengubah konstitusi seseorang. Pil buatan Xiao Yan selalu mengandung "Api Intensitas" yang jauh lebih murni, sehingga efeknya jauh melampaui resep standar. Di turnamen alkimia paling bergengsi, Xiao Yan terbukti mengalahkan para alkimiawan senior dengan usia ratusan tahun.</p>
+        <div class="af-tags"><span class="af-tag">Pil Kultivasi</span><span class="af-tag">Racik Senjata</span><span class="af-tag">Formula Kuno</span><span class="af-tag">Api Murni</span></div>
+      </div>
+    </div>
+    <div class="ab-full-card" style="--ac:#1a6cf5;">
+      <div class="af-icon" style="--ac:#1a6cf5;">🌀</div>
+      <div>
+        <div class="af-name">Awan Biru Tiada Tepi (Sonic Wave)</div>
+        <div class="af-type">Teknik Angin · Tier Agung</div>
+        <p class="af-desc">Teknik Angin Agung yang diwariskan Yao Lao kepada Xiao Yan. Gerakan ini menggabungkan kecepatan ekstrem dengan manipulasi angin untuk menciptakan ilusi gerak dan serangan yang membingungkan lawan.</p>
+        <p class="af-detail">Saat diaktifkan, Xiao Yan mampu bergerak setara kilat — bahkan Dou Wang yang lebih tinggi tingkatannya kesulitan mengikuti gerakannya. Teknik ini juga bisa digunakan untuk melarikan diri dari situasi berbahaya. Dikombinasikan dengan serangan api, Awan Biru Tiada Tepi menjadi teknik ofensif yang hampir tidak bisa di-counter.</p>
+        <div class="af-tags"><span class="af-tag">Kecepatan Ekstrem</span><span class="af-tag">Angin</span><span class="af-tag">Tier Agung</span></div>
+      </div>
+    </div>
+    <div class="ab-full-card" style="--ac:#ea80fc;">
+      <div class="af-icon" style="--ac:#ea80fc;">🐉</div>
+      <div>
+        <div class="af-name">Transformasi Naga Api Purba</div>
+        <div class="af-type">Transformasi Tubuh · Warisan Naga</div>
+        <p class="af-desc">Kemampuan transformasi paling dahsyat yang dimiliki Xiao Yan — menurunkan kekuatan naga api purba yang tersimpan dalam darahnya. Saat aktif, tubuh Xiao Yan diselimuti sisik naga yang tidak tembus senjata.</p>
+        <p class="af-detail">Warisan darah naga ini berasal dari garis keturunan ibunya yang misterius. Ketika bertransformasi, kekuatan fisik Xiao Yan meningkat berlipat ganda, ia bisa menyemburkan napas api naga yang jauh melampaui kekuatan normalnya, dan pertahanannya naik ke level yang bahkan Dou Zun kesulitan menembusnya. Transformasi penuh mengubahnya menjadi setengah naga dengan sayap api.</p>
+        <div class="af-tags"><span class="af-tag">Warisan Darah</span><span class="af-tag">Setengah Naga</span><span class="af-tag">Pertahanan Absolut</span><span class="af-tag">Napas Naga</span></div>
+      </div>
+    </div>
+    <div class="ab-full-card" style="--ac:#ff9a3c;">
+      <div class="af-icon" style="--ac:#ff9a3c;">🗡️</div>
+      <div>
+        <div class="af-name">Seni Pedang Api Liaoyuan</div>
+        <div class="af-type">Seni Pedang · Menengah Agung</div>
+        <p class="af-desc">Teknik pedang kuno yang ditemukan Xiao Yan dalam catatan tua. Menggabungkan gerakan pedang dengan api Dou Qi untuk menciptakan serangan yang meninggalkan luka bakar dalam di titik yang terkena.</p>
+        <p class="af-detail">Liaoyuan berarti "api yang menyebar seperti padang rumput terbakar" — setiap tebasan menyisakan jejak api yang terus membakar lawan setelah kontak. Teknik ini sangat efektif melawan lawan yang mengandalkan regenerasi, karena api Dou Qi menghambat penyembuhan. Ada tiga tingkatan: Percikan, Kobaran, dan Inferno — masing-masing dengan daya hancur berlipat ganda.</p>
+        <div class="af-tags"><span class="af-tag">Api + Pedang</span><span class="af-tag">Luka Bakar</span><span class="af-tag">3 Tingkatan</span></div>
+      </div>
+    </div>
+    <div class="ab-full-card" style="--ac:#1db888;">
+      <div class="af-icon" style="--ac:#1db888;">🛡️</div>
+      <div>
+        <div class="af-name">Baju Besi Api Biru Qinglian</div>
+        <div class="af-type">Pertahanan · Api Kuno Qinglian</div>
+        <p class="af-desc">Pertahanan yang terbentuk dari api kuno Qinglian Earth Heart Fire yang membungkus seluruh tubuh Xiao Yan dengan lapisan nyala biru yang membakar segala yang menyentuhnya.</p>
+        <p class="af-detail">Api Qinglian adalah salah satu api kuno paling murni yang bersumber dari inti bumi. Ketika dimanifestasikan sebagai lapisan pelindung, ia tidak hanya melindungi dari serangan fisik dan Dou Qi biasa, tetapi juga membalik balik serangan api dari lawan — mengubah energi musuh menjadi energi tambahan bagi Xiao Yan. Seorang Dou Wang biasa tidak mampu menembus lapisan ini.</p>
+        <div class="af-tags"><span class="af-tag">Api Qinglian</span><span class="af-tag">Balik Serangan</span><span class="af-tag">Anti-Api</span></div>
+      </div>
+    </div>
+    <div class="ab-full-card" style="--ac:#8b8bff;">
+      <div class="af-icon" style="--ac:#8b8bff;">💜</div>
+      <div>
+        <div class="af-name">Sejuta Tangan Api (Burning Hands)</div>
+        <div class="af-type">Serangan Area · Jarak Menengah</div>
+        <p class="af-desc">Teknik serangan area yang memanifestasikan puluhan tangan api di sekitar Xiao Yan. Setiap tangan mampu bergerak independen untuk menyerang dari berbagai sudut secara bersamaan.</p>
+        <p class="af-detail">Teknik ini sangat efektif menghadapi beberapa lawan sekaligus, atau lawan yang mengandalkan kecepatan dan manuver. Tangan-tangan api ini dikendalikan oleh pikiran Xiao Yan dan merespons insting pertempurannya secara real-time. Pada tingkatan tertinggi, ia bisa memanifestasikan hingga seribu tangan — efektif mengepung bahkan Dou Huang sekalipun.</p>
+        <div class="af-tags"><span class="af-tag">Area Attack</span><span class="af-tag">Multi-Target</span><span class="af-tag">Kontrol Pikiran</span></div>
+      </div>
+    </div>
+    <div class="ab-full-card" style="--ac:#ff5252;">
+      <div class="af-icon" style="--ac:#ff5252;">⚡</div>
+      <div>
+        <div class="af-name">Petir Biru — Kekuatan Halilintar</div>
+        <div class="af-type">Elemen Petir · Kekuatan Tersembunyi</div>
+        <p class="af-desc">Kemampuan yang berkembang seiring Xiao Yan menemukan bahwa api murni bisa berinteraksi dengan elemen petir untuk menciptakan serangan yang jauh lebih cepat dari mata biasa bisa mendeteksi.</p>
+        <p class="af-detail">Kombinasi api dan petir menghasilkan kecepatan serangan yang melampaui bahkan teknik angin terbaik. Musuh yang terkena serangan petir-api Xiao Yan mengalami kelumpuhan sementara akibat kejutan petir, sebelum kerusakan api menyelesaikan pekerjaannya. Teknik ini masih dalam perkembangan dan belum sepenuhnya dikuasai pada awal cerita.</p>
+        <div class="af-tags"><span class="af-tag">Api + Petir</span><span class="af-tag">Kecepatan Cahaya</span><span class="af-tag">Paralisis</span></div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="ft-logo">BTTH</div><p>Battle Through the Heavens © Fan Site</p><div class="ft-links"><button onclick="nav('home')">Beranda</button><button onclick="nav('characters')">Karakter</button></div></footer>
+</div>
+
+<!-- ==================== WORLD PAGE ==================== -->
+<div class="page" id="page-world">
+  <div class="page-header">
+    <button class="ph-back" onclick="nav('home')">Kembali ke Beranda</button>
+    <span class="sec-label">Peta Dunia</span>
+    <h2 class="sec-title">Lokasi & Faksi</h2>
+    <p class="sec-desc">Jelajahi setiap sudut Benua Dou Qi — dari kota kecil hingga faksi yang menggerakkan dunia</p>
+  </div>
+  <div class="world-full-wrap">
+    <div class="world-tabs">
+      <button class="wtab active" onclick="showWorldTab('lokasi',this)">Lokasi Penting</button>
+      <button class="wtab" onclick="showWorldTab('faksi',this)">Faksi & Organisasi</button>
+      <button class="wtab" onclick="showWorldTab('benua',this)">Benua & Wilayah</button>
+    </div>
+    <div class="world-panels">
+      <div class="wpanel active" id="wpanel-lokasi">
+        <div class="wloc-grid">
+          <div class="wloc"><div class="wloc-icon">🏰</div><div class="wloc-name">Kota Wutan</div><div class="wloc-type">Kota Asal</div><p class="wloc-desc">Tempat kelahiran dan tempat tumbuh Xiao Yan. Di sini klan Xiao berdomisili dan di sinilah awal dari seluruh perjalanan dimulai.</p><p class="wloc-detail">Kota kecil yang diperintah oleh beberapa klan kultivasi. Walaupun kecil, kota ini adalah titik nol dari kisah yang mengubah seluruh benua.</p></div>
+          <div class="wloc"><div class="wloc-icon">🏛️</div><div class="wloc-name">Akademi Canaan</div><div class="wloc-type">Institusi Kultivasi</div><p class="wloc-desc">Akademi kultivasi terbesar dan paling bergengsi di Kerajaan Jia Ma tengah. Tempat para berbakat dari seluruh wilayah berkumpul dan bersaing.</p><p class="wloc-detail">Di sinilah Xiao Yan bertemu para sekutu terdekatnya — Hu Jia, Wu Hao, Xun Er. Juga tempat ia menghadapi rival-rival terkuat pertamanya dan mulai membangun reputasi baru sebagai alkimiawan.</p></div>
+          <div class="wloc"><div class="wloc-icon">🌋</div><div class="wloc-name">Gurun Taklamakan</div><div class="wloc-type">Zona Berbahaya</div><p class="wloc-desc">Gurun misterius yang dipenuhi monster berbahaya, cuaca ekstrem, dan artefak kuno yang tersimpan di bawah pasirnya.</p><p class="wloc-detail">Tempat Xiao Yan menjalani latihan keras pertamanya di bawah bimbingan Yao Lao. Gurun ini juga menyimpan rahasia tentang warisan kuno yang berhubungan dengan leluhur Xiao Yan.</p></div>
+          <div class="wloc"><div class="wloc-icon">✨</div><div class="wloc-name">Gua Api Qinglian</div><div class="wloc-type">Lokasi Api Kuno</div><p class="wloc-desc">Tempat tersimpannya Qinglian Earth Heart Fire — api kuno yang bersumber dari inti bumi, salah satu api terkuat yang pernah ada.</p><p class="wloc-detail">Mencapai tempat ini sudah merupakan petualangan tersendiri yang mempertaruhkan nyawa. Ribuan praktisi telah mencoba meraih api ini dan gugur — hanya Xiao Yan yang berhasil menjinakkannya berkat konstitusi tubuhnya yang unik.</p></div>
+          <div class="wloc"><div class="wloc-icon">🌊</div><div class="wloc-name">Danau Api Bawah Tanah</div><div class="wloc-type">Tempat Latihan Rahasia</div><p class="wloc-desc">Danau berisi magma dan api alami yang tersembunyi jauh di bawah permukaan bumi. Tidak sembarang orang bisa bertahan di sini.</p><p class="wloc-detail">Xiao Yan menggunakan tempat ini untuk latihan paling intensif — membenamkan diri dalam magma untuk mempertegas kontrol api dan memperkuat konstitusi tubuhnya. Suhu di sini sudah cukup menghancurkan Dou Wang biasa.</p></div>
+          <div class="wloc"><div class="wloc-icon">🗼</div><div class="wloc-name">Menara Seni Tempur</div><div class="wloc-type">Gedung Teknik Langka</div><p class="wloc-desc">Menara berlantai banyak di Akademi Canaan yang menyimpan teknik-teknik kultivasi dari berbagai tingkatan. Setiap lantai lebih tinggi menyimpan teknik lebih kuat.</p><p class="wloc-detail">Hanya mereka dengan peringkat cukup yang bisa mengakses lantai atas. Xiao Yan berhasil menembus lantai yang jauh lebih tinggi dari yang seharusnya bisa dicapai pada tingkatannya — membuktikan bahwa kemampuannya jauh melampaui tampilan luarnya.</p></div>
+        </div>
+      </div>
+      <div class="wpanel" id="wpanel-faksi">
+        <div class="faction-grid">
+          <div class="faction" style="--fc:#ff5252;"><div class="f-header"><div class="f-emblem" style="--fc:#ff5252;">⛩️</div><div><div class="f-name">Sekte Yunlan</div><div class="f-rank">Sekte Terkuat · Kerajaan Jia Ma</div></div></div><p class="f-desc">Musuh utama Xiao Yan di arc awal. Sekte paling kuat di Kerajaan Jia Ma yang dipimpin oleh Sektaris Yun Shan — seorang Dou Zong yang ditakuti semua orang. Sekte ini menggunakan kekuatannya untuk mengendalikan politik kerajaan.</p><p class="f-members">Tokoh Kunci: Yun Shan (Sektaris), Nalan Yanran (pewaris), Yun Yun (murid terkasih Yun Shan)</p><div class="f-tags"><span class="f-tag">Antagonis Utama</span><span class="f-tag">Politik</span><span class="f-tag">Dou Zong</span></div></div>
+          <div class="faction" style="--fc:#1db888;"><div class="f-header"><div class="f-emblem" style="--fc:#1db888;">🌸</div><div><div class="f-name">Sekte Bunga Racun</div><div class="f-rank">Organisasi Wanita · Sekutu Xiao Yan</div></div></div><p class="f-desc">Faksi misterius yang terdiri dari para wanita pengikut pemimpin mereka yang dipanggil "Ratu Racun". Menguasai seni racun dan penyembuhan tingkat tinggi yang tidak bisa ditandingi siapapun.</p><p class="f-members">Tokoh Kunci: Ratu Racun Cai Lin, para murid perempuan. Memiliki jaringan informasi yang sangat luas di seluruh benua.</p><div class="f-tags"><span class="f-tag">Racun</span><span class="f-tag">Penyembuhan</span><span class="f-tag">Sekutu</span></div></div>
+          <div class="faction" style="--fc:#c9a227;"><div class="f-header"><div class="f-emblem" style="--fc:#c9a227;">⭐</div><div><div class="f-name">Klan Xiao</div><div class="f-rank">Klan Protagonis · Keluarga Inti</div></div></div><p class="f-desc">Keluarga Xiao Yan yang harus dilindunginya. Klan kultivasi yang dulunya disegani namun kini dalam tekanan dari berbagai pihak. Ayah Xiao Yan, Xiao Zhan, adalah pemimpin klan yang bijaksana namun harus menghadapi ancaman dari dalam dan luar.</p><p class="f-members">Tokoh Kunci: Xiao Zhan (Ayah), Xiao Yan (protagonis), berbagai anggota klan yang setia dan yang berkhianat.</p><div class="f-tags"><span class="f-tag">Keluarga</span><span class="f-tag">Terancam</span><span class="f-tag">Bangkit</span></div></div>
+          <div class="faction" style="--fc:#ea80fc;"><div class="f-header"><div class="f-emblem" style="--fc:#ea80fc;">🐍</div><div><div class="f-name">Klan Ular Berbisa</div><div class="f-rank">Klan Monster · Penguasa Wilayah</div></div></div><p class="f-desc">Klan ular raksasa yang dipimpin oleh Medusa. Menguasai wilayah berbahaya yang ditakuti semua praktisi manusia. Anggotanya bisa bertransformasi antara bentuk manusia dan ular, dengan kekuatan yang jauh di atas rata-rata.</p><p class="f-members">Tokoh Kunci: Medusa/Queen Cai Lin (Ratu), para Dou Wang dan Dou Huang klan yang setia pada ratu mereka.</p><div class="f-tags"><span class="f-tag">Monster</span><span class="f-tag">Transformasi</span><span class="f-tag">Racun Ular</span></div></div>
+          <div class="faction" style="--fc:#1a6cf5;"><div class="f-header"><div class="f-emblem" style="--fc:#1a6cf5;">📚</div><div><div class="f-name">Asosiasi Alkimiawan</div><div class="f-rank">Organisasi Netral · Seluruh Benua</div></div></div><p class="f-desc">Organisasi netral yang mengatur dan menilai para alkimiawan di seluruh benua. Peringkat alkimiawan dalam organisasi ini adalah salah satu sumber kekuatan sosial dan ekonomi paling berpengaruh.</p><p class="f-members">Xiao Yan bergabung dan membuktikan diri dalam kompetisi bergengsi mereka. Anggota senior asosiasi ini memiliki koneksi dengan hampir semua faksi besar di benua.</p><div class="f-tags"><span class="f-tag">Netral</span><span class="f-tag">Alkimia</span><span class="f-tag">Seluruh Benua</span></div></div>
+          <div class="faction" style="--fc:#ff9a3c;"><div class="f-header"><div class="f-emblem" style="--fc:#ff9a3c;">🏯</div><div><div class="f-name">Tiga Klan Besar Jia Ma</div><div class="f-rank">Klan Kerajaan · Kekuatan Politik</div></div></div><p class="f-desc">Tiga klan terkuat yang menopang struktur kekuasaan Kerajaan Jia Ma bersama Sekte Yunlan. Mereka memiliki perwakilan di istana kerajaan dan mengendalikan bagian besar ekonomi serta militer.</p><p class="f-members">Klan Nalan (keluarga Nalan Yanran), Klan Mu, dan Klan lainnya — semuanya dilibatkan dalam konflik besar yang dipicu oleh kebangkitan Xiao Yan.</p><div class="f-tags"><span class="f-tag">Politik</span><span class="f-tag">Militer</span><span class="f-tag">Kerajaan</span></div></div>
+        </div>
+      </div>
+      <div class="wpanel" id="wpanel-benua">
+        <div class="wloc-grid">
+          <div class="wloc"><div class="wloc-icon">🌍</div><div class="wloc-name">Kerajaan Jia Ma</div><div class="wloc-type">Benua Utama Arc Awal</div><p class="wloc-desc">Kerajaan tempat Xiao Yan dilahirkan dan tempat seluruh arc pertama berlangsung. Dikuasai oleh raja dan empat kekuatan utama termasuk Sekte Yunlan.</p><p class="wloc-detail">Skala kekuatan di sini tergolong menengah dalam konteks dunia yang lebih besar. Kekuatan tertinggi adalah Dou Zong — yang di Benua Zhongzhou bahkan tidak dianggap sebagai petinggi.</p></div>
+          <div class="wloc"><div class="wloc-icon">🌐</div><div class="wloc-name">Benua Zhongzhou</div><div class="wloc-type">Jantung Dunia Kultivasi</div><p class="wloc-desc">Benua tengah yang jauh lebih besar dan lebih berbahaya. Di sinilah empat klan kuno yang paling kuat di dunia berada, termasuk klan Xun Er.</p><p class="wloc-detail">Pindah ke Zhongzhou menandai babak baru dalam perjalanan Xiao Yan. Standar kekuatan di sini jauh lebih tinggi — Dou Wang yang disegani di Jia Ma hanya dianggap pion di Zhongzhou.</p></div>
+          <div class="wloc"><div class="wloc-icon">🏔️</div><div class="wloc-name">Gunung Suci Kultivasi</div><div class="wloc-type">Tempat Pelatihan Rahasia</div><p class="wloc-desc">Gunung-gunung tersembunyi yang dianggap sakral oleh komunitas kultivasi. Di puncak-puncaknya, Dou Qi alami mengalir jauh lebih deras dari tempat lain.</p><p class="wloc-detail">Para praktisi sering bersemedi di gunung suci untuk menerobos tingkatan baru. Namun banyak yang tidak pernah kembali — ganasnya monster dan perangkap kuno yang ada di sana menjadi ujian terakhir.</p></div>
+          <div class="wloc"><div class="wloc-icon">🌌</div><div class="wloc-name">Ruang Dimensi Kuno</div><div class="wloc-type">Dunia Tersembunyi</div><p class="wloc-desc">Dimensi-dimensi tersembunyi yang diciptakan oleh para Dou Di masa lalu — berisi warisan, teknik, dan harta tak ternilai yang ditinggalkan untuk generasi yang cukup kuat memasukinya.</p><p class="wloc-detail">Memasuki ruang dimensi kuno adalah perjalanan penuh risiko. Banyak kelompok kuat bersaing untuk menjadi yang pertama mencapai inti dimensi ini. Xiao Yan lebih dari sekali mengubah nasib petualangannya melalui ruang-ruang ini.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="ft-logo">BTTH</div><p>Battle Through the Heavens © Fan Site</p><div class="ft-links"><button onclick="nav('home')">Beranda</button><button onclick="nav('ranks')">Tingkatan</button></div></footer>
+</div>
+
+<!-- ==================== MULAI PAGE ==================== -->
+<div class="page" id="page-mulai">
+  <div class="page-header">
+    <button class="ph-back" onclick="nav('home')">Kembali ke Beranda</button>
+    <span class="sec-label">Mulai Perjalanan</span>
+    <h2 class="sec-title">Pilih Jalanmu</h2>
+    <p class="sec-desc">Dua pintu terbuka untukmu — saksikan langsung atau pelajari kisahnya lebih dalam</p>
+  </div>
+  <div style="max-width:820px;margin:0 auto;padding:0 5vw clamp(60px,8vw,100px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;">
+    <div style="border:1px solid rgba(26,108,245,.3);background:linear-gradient(160deg,rgba(10,16,32,.97),rgba(5,10,20,.99));padding:clamp(28px,4vw,48px);transition:all .3s;text-align:center;">
+      <div style="font-size:48px;margin-bottom:20px;">▶</div>
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:clamp(16px,2.2vw,22px);color:var(--cyan);margin-bottom:14px;letter-spacing:2px;">Tonton Anime</h3>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(12px,1.4vw,15px);color:var(--muted);line-height:1.8;margin-bottom:28px;">Saksikan langsung petualangan Xiao Yan dalam animasi donghua berkualitas tinggi. Rasakan pertarungan epik, api biru yang menyala, dan perjalanan kultivasi yang memukau dalam format visual.</p>
+      <a href="https://anichin.cafe/?s=Battle+Through+the+Heavens" target="_blank" rel="noopener" class="btn-p" style="display:block;text-align:center;">▶ Tonton di Anichin</a>
+    </div>
+    <div style="border:1px solid rgba(201,162,39,.3);background:linear-gradient(160deg,rgba(14,12,5,.97),rgba(8,7,3,.99));padding:clamp(28px,4vw,48px);transition:all .3s;text-align:center;">
+      <div style="font-size:48px;margin-bottom:20px;">📖</div>
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:clamp(16px,2.2vw,22px);color:var(--gold-light);margin-bottom:14px;letter-spacing:2px;">Baca Sinopsis</h3>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(12px,1.4vw,15px);color:var(--muted);line-height:1.8;margin-bottom:28px;">Telusuri sinopsis lengkap, informasi karakter, arc cerita, dan latar belakang dunia Battle Through the Heavens di Wikipedia Bahasa Indonesia — referensi terlengkap yang tersedia.</p>
+      <a href="https://id.wikipedia.org/wiki/Battle_Through_the_Heavens" target="_blank" rel="noopener" class="btn-p" style="display:block;text-align:center;background:linear-gradient(135deg,var(--gold-dim),var(--gold));">📖 Baca di Wikipedia</a>
+    </div>
+  </div>
+  <div style="text-align:center;padding:0 5vw clamp(60px,8vw,80px);">
+    <div class="div-row" style="margin-bottom:40px;"><div class="div-line"></div><div class="div-d"></div><div class="div-line"></div></div>
+    <p style="font-family:'Cinzel Decorative',serif;font-size:clamp(14px,2vw,20px);color:var(--muted);letter-spacing:2px;margin-bottom:24px;">Atau jelajahi konten lainnya</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-s" onclick="nav('ranks')">Tingkatan Dou Qi</button>
+      <button class="btn-s" onclick="nav('characters')">Karakter</button>
+      <button class="btn-s" onclick="nav('abilities')">Kemampuan</button>
+      <button class="btn-s" onclick="nav('world')">Dunia & Faksi</button>
+    </div>
+  </div>
+  <footer><div class="ft-logo">BTTH</div><p>Battle Through the Heavens © Fan Site</p><div class="ft-links"><button onclick="nav('home')">Beranda</button></div></footer>
+</div>
+
+<script>
+// ===== SPA NAVIGATION =====
+const PAGES = {
+  home:'page-home', story:'page-story', ranks:'page-ranks',
+  characters:'page-characters', abilities:'page-abilities',
+  world:'page-world', mulai:'page-mulai'
+};
+
+function nav(page) {
+  // hide all
+  Object.values(PAGES).forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.classList.remove('active');
+  });
+  // show target
+  const target = document.getElementById(PAGES[page]);
+  if(target) {
+    target.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  // update nav active state
+  document.querySelectorAll('.nav-links button[data-page]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.page === page);
+  });
+  // trigger reveal for newly shown page
+  setTimeout(initReveal, 100);
+}
+
+// World tabs
+function showWorldTab(tab, btn) {
+  document.querySelectorAll('.wpanel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.wtab').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('wpanel-' + tab);
+  if(panel) panel.classList.add('active');
+  btn.classList.add('active');
+}
+
+// Mobile menu
+function openMobile() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
+
+// Scroll reveal
+function initReveal() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if(e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.08});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+}
+initReveal();
+
+// Particles
+(function(){
+  const c = document.getElementById('particles');
+  const colors = ['#1a6cf5','#00e5ff','#4090ff','#c9a227','#8b2be2','#f0d060'];
+  function mk(){
+    const el = document.createElement('div');
+    el.className = 'spark';
+    const s = Math.random()*4+2;
+    Object.assign(el.style, {
+      width:s+'px', height:s+'px',
+      background:colors[Math.floor(Math.random()*colors.length)],
+      left:Math.random()*100+'%',
+      bottom:'-10px',
+      animationDuration:(3+Math.random()*5)+'s',
+      animationDelay:(Math.random()*8)+'s',
+      opacity:'0'
+    });
+    c.appendChild(el);
+    setTimeout(()=>el.remove(), 14000);
+  }
+  for(let i=0;i<30;i++) mk();
+  setInterval(mk, 600);
+})();
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').style.borderBottomColor =
+    window.scrollY > 40 ? 'rgba(201,162,39,0.28)' : 'rgba(201,162,39,0.18)';
+});
+</script>
+</body>
+</html>
